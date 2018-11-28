@@ -44,6 +44,9 @@ module.exports = {
             {test:/\.js$/,use :'babel-loader',exclude:/node_modules/}//配置babel来转换高级的ES语法
 
         ]
+    },
+    resolve:{
+        alias: {"vue$":"vue/dist/vue.js"}
     }
 }
 
