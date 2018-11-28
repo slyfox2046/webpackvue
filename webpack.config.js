@@ -5,6 +5,8 @@ var path = require("path");
 //如果要配置插件，需要在导出的对象中，挂载一个plugins节点
 var htmlWebpackPlugin = require("html-webpack-plugin");
 
+const { VueLoaderPlugin } = require('vue-loader')
+
 //当以命令行形式webpack 或 webpack-dev-server的时候，工具会发现，我们并没有提供要打包的文件的入口和出口文件，
 // 此时，他会检查项目根目录中的配置文件，并读取这个文件，就拿到了导出的这个配置对象，然后根据这个对象，进行打包构建
 module.exports = {
@@ -19,7 +21,7 @@ module.exports = {
         new htmlWebpackPlugin({
             template: path.join(__dirname,'./src/index.html'),//指定模板文件路径
             filename :"index.html" //设置生成的内存页面名称
-        })
+        }), new VueLoaderPlugin()
     ],
 
     //处理css，less，scss模块的loader
@@ -41,13 +43,14 @@ module.exports = {
 
             {test:/\.(ttf|eot|svg|woff|woff2)$/,use:'url-loader'},//处理字体文件的loader
 
-            {test:/\.js$/,use :'babel-loader',exclude:/node_modules/}//配置babel来转换高级的ES语法
+            {test:/\.js$/,use :'babel-loader',exclude:/node_modules/},//配置babel来转换高级的ES语法
 
+            {test:/\.vue$/,use:'vue-loader'}//处理.vue文件的loader
         ]
     },
-    resolve:{
-        alias: {"vue$":"vue/dist/vue.js"}
-    }
+    // resolve:{
+    //     alias: {"vue$":"vue/dist/vue.js"}
+    // }
 }
 
 
